@@ -8,9 +8,6 @@ DESC:   Program containing basic particle simulator.
 DIFF:   ?/5
 """
 
-from matplotlib import pyplot as plt
-from matplotlib import animation
-
 class Particle:
     """ Generic particle class with object position and velocity. """
 
@@ -69,6 +66,8 @@ def visualize(simulator):
     PARAMS:     {simulator}: Instantiated ParticleSimulator object containing data for particles. 
     RETURN:     N/A
     """
+    import matplotlib.pyplot as plt
+    import matplotlib.animation
 
     X = [particle.x for particle in simulator.particles]
     Y = [particle.y for particle in simulator.particles]
@@ -157,6 +156,20 @@ def test_evolve():
     assert fequal(p2.x, 0.191358)
     assert fequal(p2.y, -0.365227)
 
+def benchmark():
+    """
+    ...
+
+    PARAMS:     ...
+    RETURN:     ...
+    """
+    from random import uniform as uni
+
+    particles = [Particle(uni(-1.0, 1.0), uni(-1.0, 1.0), uni(-1.0, 1.0)) for _ in range(1000)]
+    simulator = ParticleSimulator(particles)
+    simulator.evolve(0.1)
+
 if __name__ == "__main__":
     # test_visualize()            # Test visualizer for particle simulation and basic benchmarking
-    test_evolve()               # Test function for particle evolution accuracy
+    # test_evolve()               # Test function for particle evolution accuracy
+    benchmark()                 # Benchmarking function for large system of particles
