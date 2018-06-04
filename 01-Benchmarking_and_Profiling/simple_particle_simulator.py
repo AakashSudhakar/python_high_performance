@@ -8,6 +8,9 @@ DESC:   Program containing basic particle simulator.
 DIFF:   ?/5
 """
 
+from matplotlib import pyplot as plt
+from matplotlib import animation
+
 class Particle:
     """ Generic particle class with object position and velocity. """
 
@@ -58,3 +61,45 @@ class ParticleSimulator:
 
                 particle.x += dx
                 particle.y += dy
+
+def visualize(simulator):
+    """
+    Global function to visualize particle simulations across given time intervals. 
+
+    PARAMS:     
+    RETURN:     
+    """
+
+    X = [particle.x for particle in simulator.particles]
+    Y = [particle.y for particle in simulator.particles]
+
+    fig = plt.figure()
+    ax = plt.subplot(111, aspect="equal")
+    line, = ax.plot(X, Y, "ro")
+
+    # Axial limits
+    plt.xlim(-1, 1)
+    plt.ylim(-1, 1)
+
+    def _init():
+        """ """
+        line.set_data([], [])
+        return line, 
+
+    def _animate():
+        """ """
+        simulator.evolve(0.01)
+        X = [particle.x for particle in simulator.particles]
+        Y = [particle.y for particle in simulator.particles]
+
+        line.set_data(X, Y)
+        return line,
+
+    anim = animation.FuncAnimation(fig, _animate, init_func=_init, blit=True, interval=10)
+    plt.show()
+
+def test_visualize():
+    pass
+
+if __name__ == "__main__":
+    test_visualize()            # Test visualizer for particle simulation and basic benchmarking
