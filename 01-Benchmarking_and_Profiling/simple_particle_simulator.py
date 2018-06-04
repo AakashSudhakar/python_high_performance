@@ -66,8 +66,8 @@ def visualize(simulator):
     """
     Global function to visualize particle simulations across given time intervals. 
 
-    PARAMS:     
-    RETURN:     
+    PARAMS:     {simulator}: Instantiated ParticleSimulator object containing data for particles. 
+    RETURN:     N/A
     """
 
     X = [particle.x for particle in simulator.particles]
@@ -82,12 +82,22 @@ def visualize(simulator):
     plt.ylim(-1, 1)
 
     def _init():
-        """ """
+        """
+        Custom initializer closure for visualizer function.
+
+        PARAMS:     N/A
+        RETURN:     {line}, : Single subplot object. 
+        """
         line.set_data([], [])
         return line, 
 
-    def _animate():
-        """ """
+    def _animate(taco):
+        """
+        Helper closure for animating particle simulator using MatPlotLib's PyPlot library. 
+
+        PARAMS:     N/A
+        RETURN:     {line}, : Single subplot object with updated particle data.
+        """
         simulator.evolve(0.01)
         X = [particle.x for particle in simulator.particles]
         Y = [particle.y for particle in simulator.particles]
@@ -99,7 +109,18 @@ def visualize(simulator):
     plt.show()
 
 def test_visualize():
-    pass
+    """
+    Global function to test particle visualization for profiling/benchmarking. 
+
+    PARAMS:     ...
+    RETURN:     ...
+    """
+    # Instantiate three particles for testing
+    particles = [Particle(0.3, 0.5, 1), 
+                 Particle(0.0, -0.5, -1), 
+                 Particle(-0.1, -0.4, 3)]
+    simulator = ParticleSimulator(particles)
+    visualize(simulator)
 
 if __name__ == "__main__":
     test_visualize()            # Test visualizer for particle simulation and basic benchmarking
