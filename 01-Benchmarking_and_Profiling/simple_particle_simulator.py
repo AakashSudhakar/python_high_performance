@@ -46,7 +46,7 @@ class ParticleSimulator:
         PARAMS:     {dt}: Differential timestep for velocity modification.
         RETURN:     N/A
         """
-        TIMESTEP = 0.00001
+        TIMESTEP = 1e-5
         num_steps = int(dt / TIMESTEP)
 
         for _ in range(num_steps):
@@ -91,7 +91,7 @@ def visualize(simulator):
         line.set_data([], [])
         return line, 
 
-    def _animate(taco):
+    def _animate(foo):
         """
         Helper closure for animating particle simulator using MatPlotLib's PyPlot library. 
 
@@ -112,8 +112,8 @@ def test_visualize():
     """
     Global function to test particle visualization for profiling/benchmarking. 
 
-    PARAMS:     ...
-    RETURN:     ...
+    PARAMS:     N/A
+    RETURN:     N/A
     """
     # Instantiate three particles for testing
     particles = [Particle(0.3, 0.5, 1), 
@@ -122,5 +122,41 @@ def test_visualize():
     simulator = ParticleSimulator(particles)
     visualize(simulator)
 
+def test_evolve():
+    """
+    ...
+
+    PARAMS:     ...
+    RETURN:     ...
+    """
+    particles = [Particle(0.3, 0.5, 1), 
+                 Particle(0.0, -0.5, -1), 
+                 Particle(-0.1, -0.4, 3)]
+    simulator = ParticleSimulator(particles)
+    simulator.evolve(0.1)
+    p0, p1, p2 = particles
+
+    def fequal(pos_act, pos_exp, eps=1e-5):
+        """
+        Test closure to check accuracy in particle evolution. 
+
+        PARAMS:     ...
+        RETURN:     ...
+        """
+        return abs(pos_act - pos_exp) < eps
+
+    # Test cases for first particle
+    assert fequal(p0.x, 0.210269)
+    assert fequal(p0.y, 0.543863)
+
+    # Test cases for second particle
+    assert fequal(p1.x, -0.099334)
+    assert fequal(p1.y, -0.490034)
+ 
+    # Test cases for third particle
+    assert fequal(p2.x, 0.191358)
+    assert fequal(p2.y, -0.365227)
+
 if __name__ == "__main__":
-    test_visualize()            # Test visualizer for particle simulation and basic benchmarking
+    # test_visualize()            # Test visualizer for particle simulation and basic benchmarking
+    test_evolve()               # Test function for particle evolution accuracy
