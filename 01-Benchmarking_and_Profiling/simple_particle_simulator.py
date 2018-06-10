@@ -1,11 +1,12 @@
 #!python3
 
 """
-NAME:   Aakash Sudhakar
-DATE:   Sunday, June 3, 2018
-DESC:   Program containing basic particle simulator. 
-        Purpose is to achieve rudimentary benchmarking/profiling.
-DIFF:   ?/5
+NAME:           Aakash Sudhakar
+START DATE:     Sunday, June 3, 2018
+END DATE:       Saturday, June 9, 2018
+DESC:           Program containing basic particle simulator. 
+                Purpose is to achieve rudimentary benchmarking/profiling.
+DIFF:           2/5
 """
 
 class Particle:
@@ -66,8 +67,8 @@ def visualize(simulator):
     PARAMS:     {simulator}: Instantiated ParticleSimulator object containing data for particles. 
     RETURN:     N/A
     """
+    from matplotlib import animation
     import matplotlib.pyplot as plt
-    import matplotlib.animation
 
     X = [particle.x for particle in simulator.particles]
     Y = [particle.y for particle in simulator.particles]
